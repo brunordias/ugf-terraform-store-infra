@@ -3,6 +3,19 @@ Projeto Terraform para o gerenciamento de recursos AWS para exemplificar o funci
 
 ![Diagram](/assets/img/diagram.jpeg)
 
+## Resumo da arquitetura
+* Cliente realiza conexão através de front-end **Amplify** e do **Application Load Balacer**.
+* As conexões HTTP do **ALB** são encaminhadas ao serviço `store-resource`.
+* `store-resource` é responsável por tratar as requisições HTTP e por encaminhar as requisições para os serviços `pets` e `order`, utilizando o serviço de descoberta do **Cloud Map** e protocolo gRPC.
+* `pets` e `order` são responsáveis pelo controle destes serviços e interações necessárias com o banco **DocumentDB**.
+* `listener` é responsável por consumir os eventos no **SNS** e **SQS**.
+* É necessário que os serviços contenham uma política IAM atrelada para interação dos eventos no **SNS** e **SQS**.
+* O banco DocumentDB publica sua senha em um segredo no **Secrets Manager**, os serviços utilizam esse valor via variável de ambiente.
+* Os logs dos serviços são enviados ao **CloudWatch**.
+* As métricas dos serviços são enviadas ao **Prometheus**.
+* A visualização das métricas ocorre através do **Grafana**.
+
+
 ## Usage
 
 To run this example you need to execute:
