@@ -46,7 +46,9 @@ Note that this example may create resources which cost money. Run `terraform des
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_alb_sg"></a> [alb\_sg](#module\_alb\_sg) | terraform-aws-modules/security-group/aws//modules/http-80 | ~> 4.0 |
+| <a name="module_acm"></a> [acm](#module\_acm) | terraform-aws-modules/acm/aws | ~> 4.3.0 |
+| <a name="module_alb_sg"></a> [alb\_sg](#module\_alb\_sg) | terraform-aws-modules/security-group/aws//modules/https-443 | ~> 4.0 |
+| <a name="module_amplify"></a> [amplify](#module\_amplify) | brunordias/amplify-app/aws | ~> 1.0.0 |
 | <a name="module_documentdb_cluster"></a> [documentdb\_cluster](#module\_documentdb\_cluster) | cloudposse/documentdb-cluster/aws | 0.22.0 |
 | <a name="module_ecs_cluster"></a> [ecs\_cluster](#module\_ecs\_cluster) | brunordias/ecs-cluster/aws | ~> 2.0.0 |
 | <a name="module_ecs_fargate_listener"></a> [ecs\_fargate\_listener](#module\_ecs\_fargate\_listener) | brunordias/ecs-fargate/aws | ~> 8.0.0 |
@@ -62,19 +64,24 @@ Note that this example may create resources which cost money. Run `terraform des
 | [aws_iam_policy.policy](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_policy) | resource |
 | [aws_kms_key.docdb](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/kms_key) | resource |
 | [aws_lb.alb](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lb) | resource |
-| [aws_lb_listener.http](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lb_listener) | resource |
+| [aws_lb_listener.https](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lb_listener) | resource |
+| [aws_route53_record.api](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/route53_record) | resource |
 | [aws_secretsmanager_secret.docdb](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/secretsmanager_secret) | resource |
 | [aws_secretsmanager_secret_version.docdb](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/secretsmanager_secret_version) | resource |
 | [aws_service_discovery_private_dns_namespace.local](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/service_discovery_private_dns_namespace) | resource |
 | [aws_service_discovery_service.local](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/service_discovery_service) | resource |
+| [aws_route53_zone.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/route53_zone) | data source |
 
 ## Inputs
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
+| <a name="input_access_token_github"></a> [access\_token\_github](#input\_access\_token\_github) | GitHub Access Token | `string` | n/a | yes |
+| <a name="input_api_url"></a> [api\_url](#input\_api\_url) | Define URL da API | `string` | n/a | yes |
 | <a name="input_docdb_password"></a> [docdb\_password](#input\_docdb\_password) | Senha do DocumentDB | `string` | n/a | yes |
 | <a name="input_name"></a> [name](#input\_name) | Utilizado para nomear os recursos | `string` | `"ugf-store"` | no |
 | <a name="input_region"></a> [region](#input\_region) | Código da região AWS | `string` | `"us-east-1"` | no |
+| <a name="input_route53_domain"></a> [route53\_domain](#input\_route53\_domain) | Define dominio do Route53 | `string` | n/a | yes |
 | <a name="input_tags"></a> [tags](#input\_tags) | Tags dos recursos | `map(any)` | <pre>{<br>  "Environment": "Demo"<br>}</pre> | no |
 
 ## Outputs

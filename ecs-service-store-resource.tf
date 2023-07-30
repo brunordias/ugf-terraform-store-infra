@@ -21,10 +21,13 @@ module "ecs_fargate_store_resource" {
   service_discovery_namespace_id = aws_service_discovery_private_dns_namespace.local.id
   policies                       = [aws_iam_policy.policy.arn]
   lb_listener_arn = [
-    aws_lb_listener.http.arn
+    aws_lb_listener.https.arn
   ]
-  lb_host_header = [aws_lb.alb.dns_name]
-  lb_arn_suffix  = aws_lb.alb.arn_suffix
+  lb_host_header = [
+    aws_lb.alb.dns_name,
+    var.api_url
+  ]
+  lb_arn_suffix = aws_lb.alb.arn_suffix
   health_check = {
     enabled             = true
     healthy_threshold   = 2

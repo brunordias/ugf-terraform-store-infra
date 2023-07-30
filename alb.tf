@@ -1,6 +1,6 @@
 ## ALB
 module "alb_sg" {
-  source  = "terraform-aws-modules/security-group/aws//modules/http-80"
+  source  = "terraform-aws-modules/security-group/aws//modules/https-443"
   version = "~> 4.0"
 
   name        = "${var.name}-alb"
@@ -22,10 +22,11 @@ resource "aws_lb" "alb" {
   tags = var.tags
 }
 
-resource "aws_lb_listener" "http" {
+resource "aws_lb_listener" "https" {
   load_balancer_arn = aws_lb.alb.arn
-  port              = "80"
-  protocol          = "HTTP"
+  port              = "443"
+  protocol          = "HTTPS"
+  certificate_arn   = module.acm.acm_certificate_arn
 
   default_action {
     type = "fixed-response"
@@ -35,5 +36,17 @@ resource "aws_lb_listener" "http" {
       message_body = "Requests otherwise not routed"
       status_code  = "200"
     }
+  }
+}
+
+resource "aws_route53_record" "api" {
+  zone_id = data.aws_route53_zone.this.zone_id
+  name    = var.api_url
+  type    = "A"
+
+  alias {
+    name                   = aws_lb.alb.dns_name
+    zone_id                = aws_lb.alb.zone_id
+    evaluate_target_health = true
   }
 }
