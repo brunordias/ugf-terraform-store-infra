@@ -20,6 +20,7 @@ module "ecs_fargate_store_resource" {
   service_discovery              = true
   service_discovery_namespace_id = aws_service_discovery_private_dns_namespace.local.id
   policies                       = [aws_iam_policy.policy.arn]
+  assign_public_ip               = false
   lb_listener_arn = [
     aws_lb_listener.https.arn
   ]

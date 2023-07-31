@@ -20,6 +20,7 @@ module "ecs_fargate_order" {
   service_discovery              = true
   service_discovery_namespace_id = aws_service_discovery_private_dns_namespace.local.id
   policies                       = [aws_iam_policy.policy.arn]
+  assign_public_ip               = false
   capacity_provider_strategy = [
     {
       capacity_provider = "FARGATE_SPOT"
